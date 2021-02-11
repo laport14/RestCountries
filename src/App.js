@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+import {Route} from 'react-router-dom'
+import { ThemeProvider } from 'styled-components';
+import "./App.css";
+import Nav from './Components/shared/Nav/Nav';
+import Countries from './Screens/Countries/Countries'
+import CountryDetail from "./Screens/CountryDetail/CountryDetail";
+import { themes } from './theme';
 
 function App() {
+  const [dark, setDark] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={themes}>
+      <div className="App">
+        <Nav dark={dark} setDark={setDark}/>
+        <Route exact path='/'>
+          <Countries dark={dark}/>
+        </Route>
+          <Route exact path='/:country' component={CountryDetail}/>
+        
+      </div>
+    </ThemeProvider>
   );
 }
 
